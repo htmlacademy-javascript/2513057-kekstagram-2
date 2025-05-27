@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Елена Лисавина](https://up.htmlacademy.ru/javascript-individual/2/user/2513057).
-* Наставник: `Неизвестно`.
+* Наставник: [Ярослав Шевцов](https://up.htmlacademy.ru/javascript-individual/2/user/2513057).
 
 ---
 
