@@ -1,22 +1,7 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const tempData = [
-  {
-    url: 'photos/1.jpg',
-    description: 'Закат на пляже',
-    likes: 152,
-    comments: ['Красота!', 'Где это?']
-  },
-  {
-    url: 'photos/2.jpg',
-    description: 'Горы и озеро',
-    likes: 200,
-    comments: ['Ух ты!', 'Как будто в сказке']
-  }
-];
-
-export const renderPictures = (data) => {
+export const renderThumbnails = (data) => {
   const fragment = document.createDocumentFragment();
 
   data.forEach(({ url, description, likes, comments }) => {
@@ -27,10 +12,12 @@ export const renderPictures = (data) => {
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
 
+
     fragment.appendChild(pictureElement);
   });
 
   picturesContainer.appendChild(fragment);
 };
 
-export { tempData };
+
+
