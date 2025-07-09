@@ -1,6 +1,8 @@
 
 import { generatePhotos } from './photos.js';
-import { renrenderThumbnails} from './render-thumbnails.js';
+import { renderThumbnails } from './render-thumbnails.js';
+import { initFullSizeViewer } from './full-size-viewer.js';
 
 const photos = generatePhotos();
-renderPictures (photos);
+renderThumbnails(photos);
+initFullSizeViewer(photos);
