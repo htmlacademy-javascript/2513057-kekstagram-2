@@ -6,6 +6,7 @@ export const renderThumbnails = (data) => {
 const fragment = document.createDocumentFragment();
 
   data.forEach(({ url, description, likes, comments }, index) => {
+
     const pictureElement = pictureTemplate.cloneNode(true);
 
     pictureElement.querySelector('.picture__img').src = url;
@@ -13,10 +14,12 @@ const fragment = document.createDocumentFragment();
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
 
-    pictureElement.dataset.index = index;
 
     fragment.appendChild(pictureElement);
-  });
+    });
 
   picturesContainer.appendChild(fragment);
+
 };
+
+
