@@ -6,7 +6,7 @@ const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
-const commentTemplate = document.querySelector('#comment-template').content.querySelector('.social__comment');
+const commentTemplate = commentList.querySelector('.social__comment');
 
 const fillBigPicture = (photoData) => {
   const commentsFragment = document.createDocumentFragment();
