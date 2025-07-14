@@ -6,6 +6,7 @@ const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
+const commentTemplate = document.querySelector('#comment-template').content.querySelector('.social__comment');
 
 const fillBigPicture = (photoData) => {
   const commentsFragment = document.createDocumentFragment();
@@ -16,13 +17,23 @@ const fillBigPicture = (photoData) => {
   bigPicture.querySelector('.social__comment-total-count').textContent = photoData.comments.length;
   bigPicture.querySelector('.social__comment-shown-count').textContent = photoData.comments.length;
 
-  // Здесь можно добавить рендер комментариев с использованием commentsFragment
-};
+  commentList.innerHTML = '';
+  photoData.comments.forEach(({ avatar, name, message }) => {
+    const clonedComment = commentTemplate.cloneNode(true);
+
+    clonedComment.querySelector('.social__picture').src = avatar;
+    clonedComment.querySelector('.social__picture').alt = name;
+    clonedComment.querySelector('.social__text').textContent = message;
+
+    commentsFragment.appendChild(clonedComment);
+  });
+
+  commentList.appendChild(commentsFragment);
 
   // Скрываем блоки, как по заданию
   commentCountBlock.classList.add('hidden');
   commentsLoader.classList.add('hidden');
-
+};
 
 const openBigPicture = (photoData) => {
   fillBigPicture(photoData);
