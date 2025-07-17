@@ -13,10 +13,6 @@ const fillBigPicture = (photoData) => {
 
   // Вставка комментариев
   initComments(photoData.comments);
-
-  // Обновление данных о количестве комментариев
-  bigPicture.querySelector('.social__comment-total-count').textContent = photoData.comments.length;
-  bigPicture.querySelector('.social__comment-shown-count').textContent = photoData.comments.length;
 };
 
 // Открытие полноразмерного изображения

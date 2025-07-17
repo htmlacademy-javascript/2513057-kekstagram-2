@@ -13,7 +13,7 @@ const fragment = document.createDocumentFragment();
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
-
+    pictureElement.dataset.index = index;
 
     fragment.appendChild(pictureElement);
     });

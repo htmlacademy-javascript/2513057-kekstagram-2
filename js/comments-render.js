@@ -1,4 +1,5 @@
-const commentTemplate = document.querySelector('#comment-template').content.querySelector('.social__comment');
+const commentTemplate = document.querySelector('.social__comment');
+
 const commentList = document.querySelector('.social__comments');
 const commentCountBlock = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
