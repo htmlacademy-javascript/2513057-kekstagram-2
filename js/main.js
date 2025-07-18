@@ -6,3 +6,5 @@ import { initFullSizeViewer } from './full-size-viewer.js';
 const photos = generatePhotos();
 renderThumbnails(photos);
 initFullSizeViewer(photos);
+
+
