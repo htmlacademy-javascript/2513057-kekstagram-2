@@ -34,5 +34,5 @@ export function generateComment() {
     name: COMMENT_NAMES[getRandomInt(0, COMMENT_NAMES.length - 1)]
   };
 }
-
+pattern: /^#(\w+)(\s+#\w+)*$/
 
