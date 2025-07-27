@@ -1,6 +1,7 @@
-import {isEscapeKey} from './utils.js';
+import {isEscKeyDown} from './utils.js';
+import { error, isHashtagValid } from './validation.js';
 const uploadForm  = document.querySelector('.img-upload__form');
-const padeBody = document.querySelector('.body');
+const pageBody = document.querySelector('body');
 
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
@@ -14,27 +15,33 @@ const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
 }
 const onDocumentKeydown = (evt)=> {
-  if (isEscapeKey(evt)){
+  if (isEscKeyDown(evt)){
     evt.preventDefault();
       closePhotoEditor();
   }
  };
+const onFormSubmit = (evt)=> {
+  evt.preventDefault();
+  if(pristine.validate()){
+    uploadForm.submit();
+  }
+};
 
 function closePhotoEditor (){
-  photoEditorForm.classList.add(hidden);
-  padeBody.classList.remove('modal-open');
+  photoEditorForm.classList.add('hidden');
+  pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadFileControl.value = '';
 }
 
-export const initUploadModal = ()=> {
-  uploadFileControl.addEventListener('change'),()=> {
+export const initUploadModal =()=> {
+  uploadFileControl.addEventListener('change',()=> {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click',onPhotoEditorResetBtnClick);
     document.addEventListener('keydown', onDocumentKeydown);
-  };
+  });
 };
 
 
@@ -44,8 +51,6 @@ const pristine = new Pristine(uploadForm,{
   errorTextParent:'img-upload__field-wrapper',
 });
 
-pristine.addValidator(hashtagInput),(value)=> {
-  const hasNamber=/\d/.test(value);
-  console.log(hasNamber, value);
-  return !hasNamber;
-},('Ошибка здесь');
+pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
+uploadForm.addEventListener('submit', onFormSubmit);
+
