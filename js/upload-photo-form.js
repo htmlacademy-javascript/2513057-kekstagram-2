@@ -8,8 +8,6 @@ const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-
 
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
