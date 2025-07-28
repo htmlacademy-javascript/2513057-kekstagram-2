@@ -1,5 +1,5 @@
 import {isEscKeyDown} from './utils.js';
-import { error, isHashtagValid } from './validation.js';
+import { error, isHashtagValid} from './validation.js';
 const uploadForm  = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
 
