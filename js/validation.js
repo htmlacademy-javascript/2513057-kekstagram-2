@@ -1,4 +1,5 @@
-import {numDecline} from './validation.js';
+import { numDecline } from "./utils";
+
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;
 
