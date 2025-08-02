@@ -1,4 +1,3 @@
-import { initScale, resetScale } from './scale-control.js';
 
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;

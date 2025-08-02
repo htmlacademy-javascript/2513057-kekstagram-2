@@ -13,3 +13,9 @@ export const numDecline = (num, nominative, genitiveSingular, genitivePlural) =>
     ? nominative
     : genitiveSingular;
 };
+
+// Функция, возвращающая CSS-класс для preview картинки в зависимости от выбранного эффекта.
+// Используется для переключения классов эффектов
+export const getEffectSelector = (effectName) => {
+  return `effects__preview--${effectName}`;
+};

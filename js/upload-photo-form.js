@@ -1,9 +1,11 @@
 
 import {isEscKeyDown} from './utils.js';
 import { error, isHashtagValid} from './validation.js';
-
+import { initScale, resetScale } from './scale-control.js';
 
 const uploadForm  = document.querySelector('.img-upload__form');
+
+
 const pageBody = document.querySelector('body');
 
 const uploadFileControl = uploadForm.querySelector('#upload-file');
@@ -29,6 +31,7 @@ const onFormSubmit = (evt)=> {
 };
 
 function closePhotoEditor (){
+  resetScale()
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -38,6 +41,7 @@ function closePhotoEditor (){
 
 export const initUploadModal =()=> {
   uploadFileControl.addEventListener('change',()=> {
+    initScale()
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click',onPhotoEditorResetBtnClick);
