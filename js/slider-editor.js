@@ -1,17 +1,17 @@
-import {uploadForm, imgPreview} from './element.js';
-import {getEffectSelector} from './utils.js';
 import {Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects} from './const.js';
 
+
+const uploadForm = document. querySelector ('.img-upload__form');
+const imgPreview = uploadForm.querySelector('.img-upload__preview img');
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
 effectLevelInput.value = EFFECT_LEVEL_MAX;
 const effectSlider = uploadForm.querySelector('.effect-level__slider');
 const sliderContainer = uploadForm.querySelector('.img-upload__effect-level');
-const selectorImg = imgPreview.classList;
 
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 
-const getUpdateSladerOptions = (effect, sliderElement) =>
-  sliderElement.noUiSlider.updateOptions(Effects[effect]);
+const getUpdateSladerOptions = (effect) =>
+ effectSlider.noUiSlider.updateOptions(Effects[effect]);
 
 const resetFilter = () => {
   imgPreview.style.removeProperty('filter');
@@ -19,14 +19,6 @@ const resetFilter = () => {
   imgPreview.className = 'effects__preview--none';
 };
 
-const onEffectRadioBtnClick = (evt) => {
-  const currentRadioBtn = evt.target.closest('.effects__radio');
-  if (currentRadioBtn) {
-    const effectBthValue = currentRadioBtn.value;
-    imgPreview.className = getEffectSelector(effectBthValue);
-    getUpdateSladerOptions(effectBthValue, effectSlider);
-  }
-};
 
 noUiSlider.create(effectSlider, {
   range: {
@@ -38,7 +30,10 @@ noUiSlider.create(effectSlider, {
   connect: 'lower',
 });
 
-effectSlider.noUiSlider.on('update', () => {
+  const onEffectRadioBtnClick =(evt) => {
+  const currentRadioBtn = evt.target.closest('.effects__radio');
+  getUpdateSladerOptions(currentRadioBtn.value);
+  effectSlider.noUiSlider.on ('update', ()=> {
   effectLevelInput.value = effectSlider.noUiSlider.get();
   effectRadioBtns.forEach((item) => {
     if (item.checked) {
@@ -51,5 +46,5 @@ effectSlider.noUiSlider.on('update', () => {
     }
   });
 });
-
+};
 export {onEffectRadioBtnClick, resetFilter};

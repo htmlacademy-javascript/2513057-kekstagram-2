@@ -1,9 +1,10 @@
-
 import {isEscKeyDown} from './utils.js';
 import { error, isHashtagValid} from './validation.js';
 import { initScale, resetScale } from './scale-control.js';
+import { onEffectRadioBtnClick } from './slider-editor.js';
 
-const uploadForm  = document.querySelector('.img-upload__form');
+
+const uploadForm = document.querySelector('.img-upload__form');
 
 
 const pageBody = document.querySelector('body');
@@ -11,27 +12,28 @@ const pageBody = document.querySelector('body');
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
+const effectRadioBtn = uploadForm.querySelectorAll('.effects__radio');
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
-}
+};
 const onDocumentKeydown = (evt)=> {
   if (isEscKeyDown(evt)){
     evt.preventDefault();
       closePhotoEditor();
   }
- };
-const onFormSubmit = (evt)=> {
+};
+
+const onFormSubmit = (evt)=>
   evt.preventDefault();
   if(pristine.validate()){
     uploadForm.submit();
   }
-};
 
 function closePhotoEditor (){
-  resetScale()
+  resetScale();
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -41,7 +43,11 @@ function closePhotoEditor (){
 
 export const initUploadModal =()=> {
   uploadFileControl.addEventListener('change',()=> {
-    initScale()
+    initScale();
+    effectRadioBtn.forEach((button)=>
+    button.addEventListener('click',onEffectRadioBtnClick)
+  );
+    onEffectRadioBtnClick();
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click',onPhotoEditorResetBtnClick);
