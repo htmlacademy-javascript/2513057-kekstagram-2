@@ -14,11 +14,11 @@ const getUpdateSliderOptions = (effect) =>{
  effectSlider.noUiSlider.updateOptions(Effects[effect]);
 };
 
-const resetFilter = () => {
+function resetFilter() {
   imgPreview.style.removeProperty('filter');
   sliderContainer.classList.add('hidden');
   imgPreview.className = 'effects__preview--none';
-};
+}
 
 
 noUiSlider.create(effectSlider, {
