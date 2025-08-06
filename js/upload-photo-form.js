@@ -12,7 +12,8 @@ const pageBody = document.querySelector('body');
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
-const effectRadioBtn = uploadForm.querySelectorAll('.effects__radio');
+const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
+
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 
@@ -44,7 +45,7 @@ function closePhotoEditor (){
 export const initUploadModal =()=> {
   uploadFileControl.addEventListener('change',()=> {
     initScale();
-    effectRadioBtn.forEach((button)=>
+    effectRadioBtns.forEach((button)=>
     button.addEventListener('click',onEffectRadioBtnClick)
   );
     onEffectRadioBtnClick();

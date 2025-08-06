@@ -10,8 +10,9 @@ const sliderContainer = uploadForm.querySelector('.img-upload__effect-level');
 
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 
-const getUpdateSladerOptions = (effect) =>
+const getUpdateSliderOptions = (effect) =>{
  effectSlider.noUiSlider.updateOptions(Effects[effect]);
+};
 
 const resetFilter = () => {
   imgPreview.style.removeProperty('filter');
@@ -32,7 +33,7 @@ noUiSlider.create(effectSlider, {
 
   const onEffectRadioBtnClick =(evt) => {
   const currentRadioBtn = evt.target.closest('.effects__radio');
-  getUpdateSladerOptions(currentRadioBtn.value);
+  getUpdateSliderOptions(currentRadioBtn.value);
   effectSlider.noUiSlider.on ('update', ()=> {
   effectLevelInput.value = effectSlider.noUiSlider.get();
   effectRadioBtns.forEach((item) => {
