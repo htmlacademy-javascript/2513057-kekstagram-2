@@ -27,11 +27,12 @@ const onDocumentKeydown = (evt)=> {
   }
 };
 
-const onFormSubmit = (evt)=>
+const onFormSubmit = (evt)=> {
   evt.preventDefault();
   if(pristine.validate()){
     uploadForm.submit();
   }
+};
 
 function closePhotoEditor (){
   resetScale();
@@ -48,7 +49,6 @@ export const initUploadModal =()=> {
     effectRadioBtns.forEach((button)=>
     button.addEventListener('click',onEffectRadioBtnClick)
   );
-    onEffectRadioBtnClick();
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click',onPhotoEditorResetBtnClick);
