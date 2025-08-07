@@ -90,7 +90,7 @@ try {
   closePhotoEditor();
   showMessage(successTemplate);
 } catch (err) {
-  showMessage(errorTemplate);
+  showMessage(errorTemplate);// Показываем сообщение об ошибке
 }
 };
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
