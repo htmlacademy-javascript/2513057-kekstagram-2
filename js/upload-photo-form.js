@@ -2,6 +2,8 @@ import {isEscKeyDown} from './utils.js';
 import { error, isHashtagValid} from './validation.js';
 import { initScale, resetScale } from './scale-control.js';
 import { onEffectRadioBtnClick } from './slider-editor.js';
+import { sendData } from './api.js';
+import { showNotification } from './error.js';
 
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -27,20 +29,21 @@ const onDocumentKeydown = (evt)=> {
 const onFormSubmit = (evt)=> {
   evt.preventDefault();
   if(pristine.validate()){
-    uploadForm.submit();
-
+    sendData(new FormData(evt.target))
+    .then(closePhotoEditor)
+    .then(()=> showNotification('success', onDocumentKeydown));
   }
 };
 
 function closePhotoEditor (){
   resetScale();
-  resetEffect();
+  resetFilter();
   pristine.reset();
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
-  uploadFileControl.value = '';
+  uploadForm.reset();
 }
 
 export const initUploadModal =()=> {
@@ -64,35 +67,6 @@ const pristine = new Pristine(uploadForm,{
   errorTextParent:'img-upload__field-wrapper',
 });
 
-const showMessage = (template) => {
-  const message = template.cloneNode(true);
-  document.body.appendChild(message);
-
-  message.addEventListener('click', () => message.remove());
-  document.addEventListener('keydown', (evt) => {
-    if (isEscKeyDown(evt)) {
-      message.remove();
-    }
-  });
-
-
-try {
-  const formData = new FormData(uploadForm);
-  const response = fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (!response.ok) {
-    throw new Error;
-  }
-
-  closePhotoEditor();
-  showMessage(successTemplate);
-} catch (err) {
-  showMessage(errorTemplate);// Показываем сообщение об ошибке
-}
-};
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
 uploadForm.addEventListener('submit', onFormSubmit);
 
