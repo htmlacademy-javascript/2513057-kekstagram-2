@@ -1,13 +1,10 @@
 import {isEscKeyDown} from './utils.js';
 import { error, isHashtagValid} from './validation.js';
 import { initScale, resetScale } from './scale-control.js';
-import { onEffectRadioBtnClick } from './slider-editor.js';
+import { onEffectRadioBtnClick, resetFilter } from './slider-editor.js';
 import { sendData } from './api.js';
 import { showNotification } from './error.js';
 
-
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
 const uploadFileControl = uploadForm.querySelector('#upload-file');
@@ -15,6 +12,7 @@ const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
+const submitButton = uploadForm.querySelector('.img-upload__submit'); // Получаем кнопку отправки
 
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
@@ -26,12 +24,26 @@ const onDocumentKeydown = (evt)=> {
   }
 };
 
+// Функция блокировки кнопки
+const disableSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправка...'; // Изменяем текст кнопки
+};
+
+// Функция разблокировки кнопки
+const enableSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Отправить'; // Возвращаем исходный текст
+};
+
 const onFormSubmit = (evt)=> {
   evt.preventDefault();
   if(pristine.validate()){
+    disableSubmitButton(); // Блокируем кнопку перед отправкой
     sendData(new FormData(evt.target))
     .then(closePhotoEditor)
-    .then(()=> showNotification('success', onDocumentKeydown));
+    .then(()=> showNotification('success', onDocumentKeydown))
+    .finally(() => enableSubmitButton()); // Разблокируем кнопку в любом случае (успех/ошибка)
   }
 };
 
@@ -44,6 +56,7 @@ function closePhotoEditor (){
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadForm.reset();
+  enableSubmitButton(); //  Разблокируем кнопку при закрытии редактора
 }
 
 export const initUploadModal =()=> {
@@ -69,16 +82,3 @@ const pristine = new Pristine(uploadForm,{
 
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
 uploadForm.addEventListener('submit', onFormSubmit);
-
-
-
-
-
-
-
-
-
-
-
-
-
