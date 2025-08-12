@@ -33,7 +33,7 @@ const disableSubmitButton = () => {
 // Функция разблокировки кнопки
 const enableSubmitButton = () => {
   submitButton.disabled = false;
-  submitButton.textContent = 'Отправить'; // Возвращаем исходный текст
+  submitButton.textContent = 'Опубликовать'; // Возвращаем исходный текст
 };
 
 const onFormSubmit = (evt)=> {
@@ -56,7 +56,7 @@ function closePhotoEditor (){
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadForm.reset();
-  enableSubmitButton(); //  Разблокируем кнопку при закрытии редактора
+
 }
 
 export const initUploadModal =()=> {
