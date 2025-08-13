@@ -1,0 +1,86 @@
+import { isEscKeyDown } from "./utils.js";
+
+const REMOVE_ERROR_MESSAGE_TIME = 5000;
+const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+const body = document.querySelector('body');
+
+// Показывает сообщение об ошибке загрузки данных (с сервера, при открытии страницы).
+export function showLoadingDataError() {
+  const dataErrorMessage = dataErrorTemplate.cloneNode(true); // Клонируем шаблон сообщения.
+  body.append(dataErrorMessage); // Добавляем сообщение в DOM.
+  setTimeout(() => {
+    dataErrorMessage.remove(); // Удаляем сообщение через 5 секунд.
+  }, REMOVE_ERROR_MESSAGE_TIME);
+}
+
+// Универсальная функция показа уведомлений (успех/ошибка отправки).
+export const showNotification = (element, cbKeyDown) => {
+  const messageTemplate = document.querySelector(`#${element}`).content.querySelector(`.${element}`); //Получаем шаблон
+  const messageContainer = messageTemplate.cloneNode(true); // Клонируем шаблон.
+  const button = messageContainer.querySelector('button'); // Находим кнопку внутри сообщения.
+  body.append(messageContainer); // Добавляем сообщение в DOM.
+
+  // Функция закрытия уведомления.
+  function closeNotification(evt) {
+    evt.stopPropagation(); //Прекращаем всплытие
+    const hasElementTarget = [messageContainer, button].includes(evt.target);
+    if (hasElementTarget || isEscKeyDown(evt)) { // Закрываем по клику на сообщение/кнопку или по Esc.
+      messageContainer.remove(); // Удаляем сообщение.
+      body.removeEventListener('keydown', closeNotification); //Удаляем обработчик
+      body.removeEventListener('click', closeNotification); //Удаляем обработчик
+      if (element === 'error') {
+        document.addEventListener('keydown', cbKeyDown); //Если ошибка, добавляем cbKeyDown
+      }
+    }
+  }
+
+  button.addEventListener('click', closeNotification); //Обработчик на кнопку
+  body.addEventListener('keydown', closeNotification); //Обработчик на keydown
+  body.addEventListener('click', closeNotification); //Обработчик на click
+};
+
+// Показывает сообщение об ошибке при отправке данных на сервер.
+export function showUploadingDataError() {
+  const uploadingErrorMessage = uploadingErrorTemplate.cloneNode(true); //Клонируем шаблон
+  const errorButton = uploadingErrorMessage.querySelector('.error__button'); //Находим кнопку
+
+  body.append(uploadingErrorMessage); //Добавляем сообщение
+
+  function onBodyEscKeydown(evt) {
+    if (!isEscKeyDown(evt)) { //Если не Esc
+      return;
+    }
+    evt.preventDefault();
+    evt.stopPropagation();
+    closeErrorMessage();
+  }
+
+  function onBodyClick(evt) {
+    if (!document.contains(uploadingErrorMessage)) { //Если нет элемента
+      return;
+    }
+    if (!evt.target.closest('.error__inner')) { //Если клик вне error_inner
+      closeErrorMessage();
+    }
+  }
+
+  function onErrorButtonClick(evt) {
+    evt.stopPropagation();
+    closeErrorMessage();
+  }
+
+  function closeErrorMessage() {
+    if (!document.contains(uploadingErrorMessage)) { //Если нет элемента
+      return;
+    }
+    uploadingErrorMessage.remove(); //Удаляем элемент
+    body.removeEventListener('keydown', onBodyEscKeydown); //Удаляем обработчик
+    body.removeEventListener('click', onBodyClick); //Удаляем обработчик
+    errorButton.removeEventListener('click', onErrorButtonClick); //Удаляем обработчик
+  }
+
+  errorButton.addEventListener('click', onErrorButtonClick);
+  body.addEventListener('keydown', onBodyEscKeydown);
+  body.addEventListener('click', onBodyClick);
+}
