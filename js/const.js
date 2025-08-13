@@ -24,3 +24,17 @@ const StyleFilterByEffects = {
 };
 
 export { EFFECT_LEVEL_MAX, Effects, StyleFilterByEffects };
+
+export const FILTER ={
+  default:'filter-default',
+  random:'filter-random',
+  discussed: 'filter-discussed',
+};
+
+export const SORTFUNC ={
+  random:() => 0.5 - Math.random(),
+  discussed: (a, b) => b.comments.length - a.comments
+};
+
+export const MAX_PICTURE_COUNT = 10;
+export const DEBOUNCE_DELAY = 500;
