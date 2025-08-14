@@ -9,6 +9,7 @@ initUploadModal();
 
 getData()
   .then((photos) => {
+    configFilter(photos);
     renderThumbnails(photos);
     initFullSizeViewer(photos);
   }
@@ -17,15 +18,5 @@ getData()
     showLoadingDataError();
   });
 
-async function bootsrapApp() {
-  configUpLoadHandLers();
-  try{
-    const pictures=await fetchPictures();
-    renderPictures(pictures);
-    configFilter(pictures);
 
-}catch{
-  showFetchError();
-}
-}
-bootsrapApp();
+

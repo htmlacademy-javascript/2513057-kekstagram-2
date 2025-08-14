@@ -31,9 +31,9 @@ export const FILTER ={
   discussed: 'filter-discussed',
 };
 
-export const SORTFUNC ={
+export const SORT_FUNC ={
   random:() => 0.5 - Math.random(),
-  discussed: (a, b) => b.comments.length - a.comments
+    discussed: (a, b) => b.comments.length - a.comments.length
 };
 
 export const MAX_PICTURE_COUNT = 10;

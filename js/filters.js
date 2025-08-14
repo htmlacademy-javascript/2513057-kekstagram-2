@@ -1,19 +1,18 @@
-import { FILTER, MAX_PICTURE_COUNT, SORTFUNC } from './const.js';
-import { renderPictures } from './render-thumbnails.js';
+import { FILTER, MAX_PICTURE_COUNT, SORT_FUNC } from './const.js';
+import { renderThumbnails} from './render-thumbnails.js';
 import { debounce } from './utils.js';
 
 
 let currentFilter =FILTER.default;
 let pictures = [];
 
-const filterElement = document.duerySelector('.img-filters');
-const ACTIVE_BUTTON_CLASS = '.img-filters_button--active';
-
-const debounceRender = debounce(renderPictures);
+const filterElement = document.querySelector('.img-filters');
+const ACTIVE_BUTTON_CLASS = 'img-filters__button--active';
+const debounceRender = debounce(renderThumbnails);
 
 function onFilterChange(evt) {
   const targetButton =evt.target;
-  const activeButton = document.duerySelector (`.${ACTIVE_BUTTON_CLASS}`);
+  const activeButton = document.querySelector(`.${ACTIVE_BUTTON_CLASS}`);
   if (!targetButton.matches('button')){
     return;
 }
@@ -30,14 +29,14 @@ if (activeButton === targetButton) {
 
 function applyFilter(){
   let filteredPictures =[];
-  if (currentFilter === FILTER.discussed){
+  if (currentFilter === FILTER.default){
     filteredPictures = pictures;
   }
   if(currentFilter === FILTER.random){
-    filteredPictures = pictures.toSorted(SORTFUNC.random).slice(0,MAX_PICTURE_COUNT);
+    filteredPictures = pictures.toSorted(SORT_FUNC.random).slice(0,MAX_PICTURE_COUNT);
   }
   if(currentFilter === FILTER.discussed){
-    filteredPictures = pictures.toSorted(SORTFUNC.discussed);
+    filteredPictures = pictures.toSorted(SORT_FUNC.discussed);
   }
   debounceRender(filteredPictures);
   }
