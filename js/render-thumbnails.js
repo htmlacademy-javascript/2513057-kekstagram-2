@@ -1,9 +1,15 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+export const clearThumbnil =()=> {
+  picturesContainer.querySelectorAll('a.picture').forEach((item)=>item.remove());
+};
+
 // Рендерит миниатюры и возвращает элементы с индексами
 export const renderThumbnails = (data) => {
 const fragment = document.createDocumentFragment();
+
+clearThumbnil();
 
   data.forEach(({ url, description, likes, comments }, index) => {
 
