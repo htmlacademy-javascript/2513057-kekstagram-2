@@ -16,6 +16,8 @@ const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const submitButton = uploadForm.querySelector('.img-upload__submit'); // Получаем кнопку отправки
 const effectsPreviewEffects = document.querySelectorAll('.effects__preview');
+const imgUploadInput = uploadForm.querySelector('.img-upload__input');
+const preview = document.querySelector('.img-upload__preview img');
 
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
@@ -28,23 +30,18 @@ const onDocumentKeydown = (evt)=> {
 };
 
 function onFileInputChange() {
-  const file = UploadInputElement.files[0];
-  const fileName = file.name.toLowerCase();
-  const fileExt = fileName.split('.'). pop();
-  const matches = FILE_TYPES.includes(fileExt);
+  const file = imgUploadInput.files[0];
+  const matches = FILE_TYPES.includes(file.type);
 if (matches) {
-    const url = URL.createObjectURL(file);
-    imgUploadPreview.src = url;
-    effectsPreviewEffects.forEach((item) => {
-  item.$tyle.backgroundImage = `url(${url})`;
-});
-
-}else {
-          return;
-  }
-  openUploadForm();
+    const previewImgUrl = URL.createObjectURL(file);
+    preview.src =previewImgUrl;
+    effectsPreviewEffects.forEach((previewEffect) => {
+      previewEffect.computedStyle.backgroundImage =`url(${previewImgUrl})`;
+    });
+ } else {
+  closePhotoEditor()
+ }
 }
-
 
 
 // Функция блокировки кнопки
@@ -83,7 +80,6 @@ function closePhotoEditor (){
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadForm.reset();
 
-
 }
 
 
@@ -99,6 +95,7 @@ export const initUploadModal =()=> {
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
   });
   uploadForm.addEventListener('submit', onFormSubmit);
+  imgUploadInput.addEventListener('change', onFileInputChange);
 };
 
 
@@ -107,10 +104,6 @@ const pristine = new Pristine(uploadForm,{
   errorClass:'img-upload__field-wrapper--error',
   errorTextParent:'img-upload__field-wrapper',
 });
-
-
-
-uploadFileControl.addEventListener('change', onFileInputChange);
 
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
 uploadForm.addEventListener('submit', onFormSubmit);
