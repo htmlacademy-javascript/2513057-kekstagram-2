@@ -1,7 +1,7 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-export const clearThumbnil =()=> {
+export const removeThumbnails =()=> {
   picturesContainer.querySelectorAll('a.picture').forEach((item)=>item.remove());
 };
 
@@ -9,7 +9,7 @@ export const clearThumbnil =()=> {
 export const renderThumbnails = (data) => {
 const fragment = document.createDocumentFragment();
 
-clearThumbnil();
+removeThumbnails();
 
   data.forEach(({ url, description, likes, comments }, index) => {
 

@@ -35,9 +35,14 @@ export const showNotification = (element, cbKeyDown) => {
     }
   }
 
+
+
   button.addEventListener('click', closeNotification); //Обработчик на кнопку
-  body.addEventListener('keydown', closeNotification); //Обработчик на keydown
+
+    body.addEventListener('keydown', closeNotification); //Обработчик на keydown
   body.addEventListener('click', closeNotification); //Обработчик на click
+
+
 };
 
 // Показывает сообщение об ошибке при отправке данных на сервер.
@@ -84,3 +89,4 @@ export function showUploadingDataError() {
   body.addEventListener('keydown', onBodyEscKeydown);
   body.addEventListener('click', onBodyClick);
 }
+

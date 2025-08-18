@@ -5,6 +5,8 @@ import { onEffectRadioBtnClick, resetFilter } from './slider-editor.js';
 import { sendData } from './api.js';
 import { showNotification } from './error.js';
 
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
 const uploadFileControl = uploadForm.querySelector('#upload-file');
@@ -13,6 +15,9 @@ const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const submitButton = uploadForm.querySelector('.img-upload__submit'); // Получаем кнопку отправки
+const effectsPreviewEffects = document.querySelectorAll('.effects__preview');
+const imgUploadInput = uploadForm.querySelector('.img-upload__input');
+const preview = document.querySelector('.img-upload__preview img');
 
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
@@ -24,17 +29,36 @@ const onDocumentKeydown = (evt)=> {
   }
 };
 
+function onFileInputChange() {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const fileExt = fileName.split('.').pop();
+  const matches = FILE_TYPES.includes(fileExt);
+  if (matches) {
+    const previewImgUrl = URL.createObjectURL(file);
+    preview.src = previewImgUrl;
+    effectsPreviewEffects.forEach((previewEffect) => {
+      previewEffect.style.backgroundImage = `url(${previewImgUrl})`;
+    });
+  } else {
+    closePhotoEditor();
+  }
+}
+
+
 // Функция блокировки кнопки
-const disableSubmitButton = () => {
+function disableSubmitButton() {
   submitButton.disabled = true;
-  submitButton.textContent = 'Отправка...'; // Изменяем текст кнопки
-};
+  submitButton.textContent = 'Отправка…'; // Изменяем текст кнопки
+}
+
 
 // Функция разблокировки кнопки
-const enableSubmitButton = () => {
+function enableSubmitButton() {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать'; // Возвращаем исходный текст
-};
+}
+
 
 const onFormSubmit = (evt)=> {
   evt.preventDefault();
@@ -46,6 +70,7 @@ const onFormSubmit = (evt)=> {
     .finally(() => enableSubmitButton()); // Разблокируем кнопку в любом случае (успех/ошибка)
   }
 };
+
 
 function closePhotoEditor (){
   resetScale();
@@ -59,8 +84,10 @@ function closePhotoEditor (){
 
 }
 
+
 export const initUploadModal =()=> {
   uploadFileControl.addEventListener('change',()=> {
+    onFileInputChange();
     initScale();
     effectRadioBtns.forEach((button)=>
     button.addEventListener('click',onEffectRadioBtnClick)
@@ -71,6 +98,7 @@ export const initUploadModal =()=> {
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
   });
   uploadForm.addEventListener('submit', onFormSubmit);
+
 };
 
 
@@ -82,3 +110,4 @@ const pristine = new Pristine(uploadForm,{
 
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
 uploadForm.addEventListener('submit', onFormSubmit);
+
