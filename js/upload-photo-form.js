@@ -32,17 +32,17 @@ const onDocumentKeydown = (evt)=> {
 function onFileInputChange() {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
-  const fileExt =fileName.split('.'). pop ();
+  const fileExt = fileName.split('.').pop();
   const matches = FILE_TYPES.includes(fileExt);
-if (matches) {
+  if (matches) {
     const previewImgUrl = URL.createObjectURL(file);
-    preview.src =previewImgUrl;
+    preview.src = previewImgUrl;
     effectsPreviewEffects.forEach((previewEffect) => {
-      previewEffect.computedStyle.backgroundImage =`url(${previewImgUrl})`;
+      previewEffect.style.backgroundImage = `url(${previewImgUrl})`;
     });
- } else {
-  closePhotoEditor()
- }
+  } else {
+    closePhotoEditor();
+  }
 }
 
 
