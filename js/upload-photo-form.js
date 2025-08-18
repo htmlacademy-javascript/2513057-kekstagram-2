@@ -31,7 +31,9 @@ const onDocumentKeydown = (evt)=> {
 
 function onFileInputChange() {
   const file = imgUploadInput.files[0];
-  const matches = FILE_TYPES.includes(file.type);
+  const fileName = file.name.toLowerCase();
+  const fileExt =fileName.split('.'). pop ();
+  const matches = FILE_TYPES.includes(fileExt);
 if (matches) {
     const previewImgUrl = URL.createObjectURL(file);
     preview.src =previewImgUrl;
@@ -45,17 +47,17 @@ if (matches) {
 
 
 // Функция блокировки кнопки
-const disableSubmitButton = () => {
+function disableSubmitButton() {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправка…'; // Изменяем текст кнопки
-};
+}
 
 
 // Функция разблокировки кнопки
-const enableSubmitButton = () => {
+function enableSubmitButton() {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать'; // Возвращаем исходный текст
-};
+}
 
 
 const onFormSubmit = (evt)=> {
@@ -85,6 +87,7 @@ function closePhotoEditor (){
 
 export const initUploadModal =()=> {
   uploadFileControl.addEventListener('change',()=> {
+    onFileInputChange();
     initScale();
     effectRadioBtns.forEach((button)=>
     button.addEventListener('click',onEffectRadioBtnClick)
@@ -95,7 +98,7 @@ export const initUploadModal =()=> {
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
   });
   uploadForm.addEventListener('submit', onFormSubmit);
-  imgUploadInput.addEventListener('change', onFileInputChange);
+
 };
 
 
