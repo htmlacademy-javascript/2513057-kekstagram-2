@@ -21,6 +21,13 @@ removeThumbnails();
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     pictureElement.dataset.index = index;
 
+
+pictureElement.addEventListener('click', (evt) => {
+  evt.preventDefault(); 
+  const pictureIndex = evt.currentTarget.dataset.index; 
+  openModal(data[pictureIndex]); 
+});
+
     fragment.appendChild(pictureElement);
     });
 

@@ -13,10 +13,7 @@ getData()
     renderThumbnails(photos);
     initFullSizeViewer(photos);
   }
-  )
-  .catch(() => {
-    showLoadingDataError();
-  });
+  );
 
 
 

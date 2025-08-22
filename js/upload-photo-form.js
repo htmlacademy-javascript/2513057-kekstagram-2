@@ -22,10 +22,16 @@ const preview = document.querySelector('.img-upload__preview img');
 const onPhotoEditorResetBtnClick = ()=> {
   closePhotoEditor();
 };
+
 const onDocumentKeydown = (evt)=> {
-  if (isEscKeyDown(evt)){
-    evt.preventDefault();
-      closePhotoEditor();
+  if (isEscKeyDown(evt)) {
+ 
+    if (document.activeElement === hashtagInput || document.activeElement === descriptionInput) {
+      evt.stopPropagation(); 
+    } else {
+      evt.preventDefault(); 
+      closePhotoEditor(); 
+    }
   }
 };
 
@@ -109,5 +115,5 @@ const pristine = new Pristine(uploadForm,{
 });
 
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
-uploadForm.addEventListener('submit', onFormSubmit);
+
 
