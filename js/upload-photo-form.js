@@ -5,7 +5,6 @@ import { onEffectRadioBtnClick, resetFilter } from './slider-editor.js';
 import { sendData } from './api.js';
 import { showNotification } from './error.js';
 
-
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -19,6 +18,12 @@ const submitButton = uploadForm.querySelector('.img-upload__submit'); // Пол�
 const effectsPreviewEffects = document.querySelectorAll('.effects__preview');
 const imgUploadInput = uploadForm.querySelector('.img-upload__input');
 const preview = document.querySelector('.img-upload__preview img');
+
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+});
 
 const onPhotoEditorResetBtnClick = () => {
   closePhotoEditor();
@@ -51,20 +56,17 @@ function onFileInputChange() {
   }
 }
 
-
 // Функция блокировки кнопки
 function disableSubmitButton() {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправка…'; // Изменяем текст кнопки
 }
 
-
 // Функция разблокировки кнопки
 function enableSubmitButton() {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать'; // Возвращаем исходный текст
 }
-
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
@@ -78,7 +80,6 @@ const onFormSubmit = (evt) => {
   }
 };
 
-
 function closePhotoEditor() {
   resetScale();
   resetFilter();
@@ -88,9 +89,7 @@ function closePhotoEditor() {
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadForm.reset();
-
 }
-
 
 export const initUploadModal = () => {
   uploadFileControl.addEventListener('change', () => {
@@ -108,13 +107,4 @@ export const initUploadModal = () => {
 
 };
 
-
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-});
-
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
-
-

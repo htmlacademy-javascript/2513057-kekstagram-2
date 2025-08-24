@@ -8,7 +8,7 @@ initUploadModal();
 
 getData()
   .then((photos) => {
-    configFilter(photos);
     renderThumbnails(photos);
     initFullSizeViewer(photos);
+    configFilter(photos);
   });

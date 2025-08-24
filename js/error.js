@@ -1,8 +1,7 @@
-import { isEscKeyDown } from "./utils.js";
+import { isEscKeyDown } from './utils.js';
 
 const REMOVE_ERROR_MESSAGE_TIME = 5000;
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
 
 // Показывает сообщение об ошибке загрузки данных (с сервера, при открытии страницы).

@@ -1,14 +1,12 @@
 import { Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects } from './const.js';
 
-
 const uploadForm = document.querySelector('.img-upload__form');
 const imgPreview = uploadForm.querySelector('.img-upload__preview img');
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
-effectLevelInput.value = EFFECT_LEVEL_MAX;
 const effectSlider = uploadForm.querySelector('.effect-level__slider');
 const sliderContainer = uploadForm.querySelector('.img-upload__effect-level');
-
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
+effectLevelInput.value = EFFECT_LEVEL_MAX;
 
 const getUpdateSliderOptions = (effect) => {
   effectSlider.noUiSlider.updateOptions(Effects[effect]);
@@ -19,8 +17,6 @@ function resetFilter() {
   sliderContainer.classList.add('hidden');
   imgPreview.className = 'effects__preview--none';
 }
-
-
 
 noUiSlider.create(effectSlider, {
   range: {
@@ -33,7 +29,6 @@ noUiSlider.create(effectSlider, {
 });
 
 sliderContainer.classList.add('hidden');
-
 
 const onEffectRadioBtnClick = (evt) => {
   const currentRadioBtn = evt.target.closest('.effects__radio');

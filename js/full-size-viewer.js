@@ -17,7 +17,7 @@ const fillBigPicture = (photoData) => {
 
 // Открытие полноразмерного изображения
 const openBigPicture = (photoData) => {
-  fillBigPicture(photoData);  // Вызываем функцию для заполнения данных
+  fillBigPicture(photoData); // Вызываем функцию для заполнения данных
 
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');

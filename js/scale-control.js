@@ -37,7 +37,7 @@ export function initScale() {
 }
 
 export function resetScale() {
-  scaleControlValue.value = '100%';
+  scaleControlValue.value = `${MAX_SCALE}%`;
   imgUploadPreview.style.transform = 'none';
   scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
   scaleControlBigger.removeEventListener('click', onScaleControllBiggerClick);
