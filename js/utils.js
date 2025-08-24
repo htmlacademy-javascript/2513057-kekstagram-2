@@ -10,11 +10,11 @@ export const numDecline = (num, nominative, genitiveSingular, genitivePlural) =>
     : genitiveSingular;
 };
 
-function debounce(callback, timeoutDelay = DEBOUNCE_DELAY){
-let timeoutId;
-return function(){
-clearTimeout(timeoutId);
-timeoutId = setTimeout(()=>callback(...arguments),timeoutDelay);
-};
+function debounce(callback, timeoutDelay = DEBOUNCE_DELAY) {
+  let timeoutId;
+  return function () {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback(...arguments), timeoutDelay);
+  };
 }
-export {debounce};
+export { debounce };

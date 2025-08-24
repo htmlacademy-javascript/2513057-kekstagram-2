@@ -1,8 +1,7 @@
-import { isEscKeyDown } from "./utils.js";
+import { isEscKeyDown } from './utils.js';
 
 const REMOVE_ERROR_MESSAGE_TIME = 5000;
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
 
 // Показывает сообщение об ошибке загрузки данных (с сервера, при открытии страницы).
@@ -35,58 +34,8 @@ export const showNotification = (element, cbKeyDown) => {
     }
   }
 
-
-
   button.addEventListener('click', closeNotification); //Обработчик на кнопку
 
-    body.addEventListener('keydown', closeNotification); //Обработчик на keydown
+  body.addEventListener('keydown', closeNotification); //Обработчик на keydown
   body.addEventListener('click', closeNotification); //Обработчик на click
-
-
 };
-
-// Показывает сообщение об ошибке при отправке данных на сервер.
-export function showUploadingDataError() {
-  const uploadingErrorMessage = uploadingErrorTemplate.cloneNode(true); //Клонируем шаблон
-  const errorButton = uploadingErrorMessage.querySelector('.error__button'); //Находим кнопку
-
-  body.append(uploadingErrorMessage); //Добавляем сообщение
-
-  function onBodyEscKeydown(evt) {
-    if (!isEscKeyDown(evt)) { //Если не Esc
-      return;
-    }
-    evt.preventDefault();
-    evt.stopPropagation();
-    closeErrorMessage();
-  }
-
-  function onBodyClick(evt) {
-    if (!document.contains(uploadingErrorMessage)) { //Если нет элемента
-      return;
-    }
-    if (!evt.target.closest('.error__inner')) { //Если клик вне error_inner
-      closeErrorMessage();
-    }
-  }
-
-  function onErrorButtonClick(evt) {
-    evt.stopPropagation();
-    closeErrorMessage();
-  }
-
-  function closeErrorMessage() {
-    if (!document.contains(uploadingErrorMessage)) { //Если нет элемента
-      return;
-    }
-    uploadingErrorMessage.remove(); //Удаляем элемент
-    body.removeEventListener('keydown', onBodyEscKeydown); //Удаляем обработчик
-    body.removeEventListener('click', onBodyClick); //Удаляем обработчик
-    errorButton.removeEventListener('click', onErrorButtonClick); //Удаляем обработчик
-  }
-
-  errorButton.addEventListener('click', onErrorButtonClick);
-  body.addEventListener('keydown', onBodyEscKeydown);
-  body.addEventListener('click', onBodyClick);
-}
-
