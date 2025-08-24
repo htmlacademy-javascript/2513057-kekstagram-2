@@ -13,7 +13,7 @@ export function changeScale(value) {
   imgUploadPreview.style.transform = `scale(${value / 100})`;
 }
 
-function onScaleControlSmallerClick (){
+function onScaleControlSmallerClick() {
   const scaleControlValueNumber = parseFloat(scaleControlValue.value);
   if (scaleControlValueNumber === MIN_SCALE) {
     return;
@@ -22,7 +22,7 @@ function onScaleControlSmallerClick (){
   changeScale(scaleSize);
 }
 
-function onScaleControllBiggerClick (){
+function onScaleControllBiggerClick() {
   const scaleControlValueNumber = parseFloat(scaleControlValue.value);
   if (scaleControlValueNumber === MAX_SCALE) {
     return;
@@ -31,12 +31,12 @@ function onScaleControllBiggerClick (){
   changeScale(scaleSize);
 }
 
-export function initScale (){
+export function initScale() {
   scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
   scaleControlBigger.addEventListener('click', onScaleControllBiggerClick);
 }
 
-export function resetScale (){
+export function resetScale() {
   scaleControlValue.value = '100%';
   imgUploadPreview.style.transform = 'none';
   scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);

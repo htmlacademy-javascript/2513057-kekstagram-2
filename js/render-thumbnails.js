@@ -1,15 +1,15 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-export const removeThumbnails =()=> {
-  picturesContainer.querySelectorAll('a.picture').forEach((item)=>item.remove());
+export const removeThumbnails = () => {
+  picturesContainer.querySelectorAll('a.picture').forEach((item) => item.remove());
 };
 
 // Рендерит миниатюры и возвращает элементы с индексами
 export const renderThumbnails = (data) => {
-const fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-removeThumbnails();
+  removeThumbnails();
 
   data.forEach(({ url, description, likes, comments }, index) => {
 
@@ -21,18 +21,9 @@ removeThumbnails();
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     pictureElement.dataset.index = index;
 
-
-pictureElement.addEventListener('click', (evt) => {
-  evt.preventDefault(); 
-  const pictureIndex = evt.currentTarget.dataset.index; 
-  openModal(data[pictureIndex]); 
-});
-
     fragment.appendChild(pictureElement);
-    });
+  });
 
   picturesContainer.appendChild(fragment);
 
 };
-
-

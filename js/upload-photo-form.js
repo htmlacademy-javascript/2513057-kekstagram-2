@@ -1,5 +1,5 @@
-import {isEscKeyDown} from './utils.js';
-import { error, isHashtagValid} from './validation.js';
+import { isEscKeyDown } from './utils.js';
+import { error, isHashtagValid } from './validation.js';
 import { initScale, resetScale } from './scale-control.js';
 import { onEffectRadioBtnClick, resetFilter } from './slider-editor.js';
 import { sendData } from './api.js';
@@ -14,23 +14,23 @@ const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
+const descriptionInput = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit'); // Получаем кнопку отправки
 const effectsPreviewEffects = document.querySelectorAll('.effects__preview');
 const imgUploadInput = uploadForm.querySelector('.img-upload__input');
 const preview = document.querySelector('.img-upload__preview img');
 
-const onPhotoEditorResetBtnClick = ()=> {
+const onPhotoEditorResetBtnClick = () => {
   closePhotoEditor();
 };
 
-const onDocumentKeydown = (evt)=> {
+const onDocumentKeydown = (evt) => {
   if (isEscKeyDown(evt)) {
- 
+    evt.preventDefault();
     if (document.activeElement === hashtagInput || document.activeElement === descriptionInput) {
-      evt.stopPropagation(); 
+      evt.stopPropagation();
     } else {
-      evt.preventDefault(); 
-      closePhotoEditor(); 
+      closePhotoEditor();
     }
   }
 };
@@ -66,19 +66,20 @@ function enableSubmitButton() {
 }
 
 
-const onFormSubmit = (evt)=> {
+const onFormSubmit = (evt) => {
   evt.preventDefault();
-  if(pristine.validate()){
+  if (pristine.validate()) {
     disableSubmitButton(); // Блокируем кнопку перед отправкой
     sendData(new FormData(evt.target))
-    .then(closePhotoEditor)
-    .then(()=> showNotification('success', onDocumentKeydown))
-    .finally(() => enableSubmitButton()); // Разблокируем кнопку в любом случае (успех/ошибка)
+      .then(closePhotoEditor)
+      .then(() => showNotification('success', onDocumentKeydown))
+      .catch(() => showNotification('error', onDocumentKeydown))
+      .finally(() => enableSubmitButton()); // Разблокируем кнопку в любом случае (успех/ошибка)
   }
 };
 
 
-function closePhotoEditor (){
+function closePhotoEditor() {
   resetScale();
   resetFilter();
   pristine.reset();
@@ -91,13 +92,13 @@ function closePhotoEditor (){
 }
 
 
-export const initUploadModal =()=> {
-  uploadFileControl.addEventListener('change',()=> {
+export const initUploadModal = () => {
+  uploadFileControl.addEventListener('change', () => {
     onFileInputChange();
     initScale();
-    effectRadioBtns.forEach((button)=>
-    button.addEventListener('click',onEffectRadioBtnClick)
-  );
+    effectRadioBtns.forEach((button) =>
+      button.addEventListener('click', onEffectRadioBtnClick)
+    );
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
@@ -108,10 +109,10 @@ export const initUploadModal =()=> {
 };
 
 
-const pristine = new Pristine(uploadForm,{
-  classTo:'img-upload__field-wrapper',
-  errorClass:'img-upload__field-wrapper--error',
-  errorTextParent:'img-upload__field-wrapper',
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
 });
 
 pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
