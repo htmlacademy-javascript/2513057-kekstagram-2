@@ -25,15 +25,15 @@ const StyleFilterByEffects = {
 
 export { EFFECT_LEVEL_MAX, Effects, StyleFilterByEffects };
 
-export const FILTER ={
-  default:'filter-default',
-  random:'filter-random',
+export const FILTER = {
+  default: 'filter-default',
+  random: 'filter-random',
   discussed: 'filter-discussed',
 };
 
-export const SORT_FUNC ={
-  random:() => 0.5 - Math.random(),
-    discussed: (a, b) => b.comments.length - a.comments.length
+export const SORT_FUNC = {
+  random: () => 0.5 - Math.random(),
+  discussed: (a, b) => b.comments.length - a.comments.length
 };
 
 export const MAX_PICTURE_COUNT = 10;

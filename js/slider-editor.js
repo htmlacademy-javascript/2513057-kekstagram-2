@@ -1,17 +1,15 @@
-import {Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects} from './const.js';
+import { Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects } from './const.js';
 
-
-const uploadForm = document. querySelector ('.img-upload__form');
+const uploadForm = document.querySelector('.img-upload__form');
 const imgPreview = uploadForm.querySelector('.img-upload__preview img');
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
-effectLevelInput.value = EFFECT_LEVEL_MAX;
 const effectSlider = uploadForm.querySelector('.effect-level__slider');
 const sliderContainer = uploadForm.querySelector('.img-upload__effect-level');
-
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
+effectLevelInput.value = EFFECT_LEVEL_MAX;
 
-const getUpdateSliderOptions = (effect) =>{
- effectSlider.noUiSlider.updateOptions(Effects[effect]);
+const getUpdateSliderOptions = (effect) => {
+  effectSlider.noUiSlider.updateOptions(Effects[effect]);
 };
 
 function resetFilter() {
@@ -19,7 +17,6 @@ function resetFilter() {
   sliderContainer.classList.add('hidden');
   imgPreview.className = 'effects__preview--none';
 }
-
 
 noUiSlider.create(effectSlider, {
   range: {
@@ -31,21 +28,24 @@ noUiSlider.create(effectSlider, {
   connect: 'lower',
 });
 
-  const onEffectRadioBtnClick =(evt) => {
+sliderContainer.classList.add('hidden');
+
+const onEffectRadioBtnClick = (evt) => {
   const currentRadioBtn = evt.target.closest('.effects__radio');
   getUpdateSliderOptions(currentRadioBtn.value);
-  effectSlider.noUiSlider.on ('update', ()=> {
-  effectLevelInput.value = effectSlider.noUiSlider.get();
-  effectRadioBtns.forEach((item) => {
-    if (item.checked) {
-      if (item.value !== 'none') {
-        sliderContainer.classList.remove('hidden');
-        imgPreview.style.filter = StyleFilterByEffects[item.value](effectLevelInput.value);
-      } else {
-        resetFilter();
+  effectSlider.noUiSlider.on('update', () => {
+    effectLevelInput.value = Number(effectSlider.noUiSlider.get());
+    effectRadioBtns.forEach((item) => {
+      if (item.checked) {
+        if (item.value !== 'none') {
+          sliderContainer.classList.remove('hidden');
+          imgPreview.style.filter = StyleFilterByEffects[item.value](effectLevelInput.value);
+        } else {
+          resetFilter();
+        }
       }
-    }
+    });
   });
-});
 };
-export {onEffectRadioBtnClick, resetFilter};
+
+export { onEffectRadioBtnClick, resetFilter };

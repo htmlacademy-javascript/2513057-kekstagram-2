@@ -1,4 +1,4 @@
-import { showLoadingDataError, showUploadingDataError } from './error.js';
+import { showLoadingDataError } from './error.js';
 
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const Route = {
@@ -10,18 +10,14 @@ const Method = {
   POST: 'POST',
 };
 
-const load = (route, showError, method = Method.GET, body = null) =>
-  fetch(`${BASE_URL}${route}`, {method, body})
+const load = (route, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
         throw new Error();
       }
       return response.json();
-    })
-    .catch(() => {
-      throw new Error(showError());
     });
 
-export const getData = () => load(Route.GET_DATA, showLoadingDataError);
-
-export const sendData = (body) => load(Route.SEND_DATA, showUploadingDataError, Method.POST, body);
+export const getData = () => load(Route.GET_DATA).catch(showLoadingDataError);
+export const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
