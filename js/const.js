@@ -1,5 +1,3 @@
-// const.js
-
 // Максимальное значение уровня эффекта
 const EFFECT_LEVEL_MAX = 100;
 
@@ -32,8 +30,8 @@ export const FILTER = {
 };
 
 export const SORT_FUNC = {
-  random: () => 0.5 - Math.random(),
-  discussed: (a, b) => b.comments.length - a.comments.length
+  sortRandomly: () => 0.5 - Math.random(),
+  sortByCommentsCount: (a, b) => b.comments.length - a.comments.length
 };
 
 export const MAX_PICTURE_COUNT = 10;
