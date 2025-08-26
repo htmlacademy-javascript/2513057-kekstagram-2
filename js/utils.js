@@ -1,7 +1,7 @@
 import { DEBOUNCE_DELAY } from './const';
 export const isEscKeyDown = (event) => event.key === 'Escape';
 
-export const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
+export const declineNumber= (num, nominative, genitiveSingular, genitivePlural) => {
   if (num % 10 === 0 || num % 100 > 4 && num % 100 < 21) {
     return genitivePlural;
   }

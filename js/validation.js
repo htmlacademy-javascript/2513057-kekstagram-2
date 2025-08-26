@@ -1,4 +1,4 @@
-import { numDecline } from './utils';
+import { declineNumber } from './utils';
 
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;
@@ -32,7 +32,7 @@ export const isHashtagValid = (value) => {
     },
     {
       check: inputValues.length > MAX_HASHTAGS,
-      error: `Нельзя указывать больше ${MAX_HASHTAGS} ${numDecline(
+      error: `Нельзя указывать больше ${MAX_HASHTAGS} ${declineNumber(
         MAX_HASHTAGS, 'хештега', 'хештегов', 'хештегов'
       )}`,
     },
