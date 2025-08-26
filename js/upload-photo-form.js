@@ -107,4 +107,4 @@ export const initUploadModal = () => {
 
 };
 
-pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
+pristine.addValidator(hashtagInput, isHashtagValid, getErrorMessage, 2, false);
