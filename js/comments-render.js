@@ -12,7 +12,7 @@ let renderedCount = 0;
 
 const renderComments = () => {
   const fragment = document.createDocumentFragment();
-  const renderedComments  = allComments.slice(renderedCount, renderedCount + COMMENTS_PER_STEP);
+  const renderedComments = allComments.slice(renderedCount, renderedCount + COMMENTS_PER_STEP);
 
   renderedComments.forEach(({ avatar, name, message }) => {
     const comment = commentTemplate.cloneNode(true);
@@ -23,7 +23,7 @@ const renderComments = () => {
   });
 
   commentList.appendChild(fragment);
-  renderedCount += renderedComments .length;
+  renderedCount += renderedComments.length;
 
   shownCountElement.textContent = renderedCount;
   totalCountElement.textContent = allComments.length;
