@@ -1,5 +1,5 @@
 import { isEscKeyDown } from './utils.js';
-import { error, isHashtagValid } from './validation.js';
+import { getErrorMessage, isHashtagValid } from './validation.js';
 import { initScale, resetScale } from './scale-control.js';
 import { onEffectRadioBtnClick, resetFilter } from './slider-editor.js';
 import { sendData } from './api.js';
@@ -107,4 +107,4 @@ export const initUploadModal = () => {
 
 };
 
-pristine.addValidator(hashtagInput, isHashtagValid, error, 2, false);
+pristine.addValidator(hashtagInput, isHashtagValid, getErrorMessage, 2, false);

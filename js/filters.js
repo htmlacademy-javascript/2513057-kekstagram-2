@@ -3,12 +3,11 @@ import { initFullSizeViewer } from './full-size-viewer.js';
 import { renderThumbnails } from './render-thumbnails.js';
 import { debounce } from './utils.js';
 
-
+const ACTIVE_BUTTON_CLASS = 'img-filters__button--active';
 let currentFilter = FILTER.default;
 let pictures = [];
 
 const filterElement = document.querySelector('.img-filters');
-const ACTIVE_BUTTON_CLASS = 'img-filters__button--active';
 const debounceRender = debounce(renderThumbnails);
 const debounceRenderFullSizeViewer = debounce(initFullSizeViewer);
 function onFilterChange(evt) {
@@ -34,10 +33,10 @@ function applyFilter() {
     filteredPictures = pictures;
   }
   if (currentFilter === FILTER.random) {
-    filteredPictures = pictures.toSorted(SORT_FUNC.random).slice(0, MAX_PICTURE_COUNT);
+    filteredPictures = pictures.toSorted(SORT_FUNC.sortRandomly).slice(0, MAX_PICTURE_COUNT);
   }
   if (currentFilter === FILTER.discussed) {
-    filteredPictures = pictures.toSorted(SORT_FUNC.discussed);
+    filteredPictures = pictures.toSorted(SORT_FUNC.sortByCommentsCount);
   }
   debounceRender(filteredPictures);
   debounceRenderFullSizeViewer(filteredPictures);

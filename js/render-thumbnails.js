@@ -11,7 +11,7 @@ export const renderThumbnails = (data) => {
 
   removeThumbnails();
 
-  data.forEach(({ url, description, likes, comments }, index) => {
+  data?.forEach(({ url, description, likes, comments }, index) => {
 
     const pictureElement = pictureTemplate.cloneNode(true);
 
