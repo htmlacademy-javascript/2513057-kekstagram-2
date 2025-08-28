@@ -44,6 +44,9 @@ const initComments = (comments) => {
   renderComments();
 };
 
-commentsLoader.addEventListener('click', renderComments);
+const onCommentsLoaderElementClick = () => {
+  renderComments();
+};
 
+commentsLoader.addEventListener('click', onCommentsLoaderElementClick);
 export { initComments };
