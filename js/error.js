@@ -21,21 +21,21 @@ export const showNotification = (element, cbKeyDown) => {
   body.append(messageContainer); // Добавляем сообщение в DOM.
 
   // Функция закрытия уведомления.
-  function closeNotification(evt) {
+  function onCloseNotification(evt) {
     evt.stopPropagation(); //Прекращаем всплытие
     const hasElementTarget = [messageContainer, button].includes(evt.target);
     if (hasElementTarget || isEscKeyDown(evt)) { // Закрываем по клику на сообщение/кнопку или по Esc.
       messageContainer.remove(); // Удаляем сообщение.
-      body.removeEventListener('keydown', closeNotification); //Удаляем обработчик
-      body.removeEventListener('click', closeNotification); //Удаляем обработчик
+      body.removeEventListener('keydown', onCloseNotification); //Удаляем обработчик
+      body.removeEventListener('click', onCloseNotification); //Удаляем обработчик
       if (element === 'error') {
         document.addEventListener('keydown', cbKeyDown); //Если ошибка, добавляем cbKeyDown
       }
     }
   }
 
-  button.addEventListener('click', closeNotification); //Обработчик на кнопку
+  button.addEventListener('click', onCloseNotification); //Обработчик на кнопку
 
-  body.addEventListener('keydown', closeNotification); //Обработчик на keydown
-  body.addEventListener('click', closeNotification); //Обработчик на click
+  body.addEventListener('keydown', onCloseNotification); //Обработчик на keydown
+  body.addEventListener('click', onCloseNotification); //Обработчик на click
 };
