@@ -49,4 +49,5 @@ const onCommentsLoaderElementClick = () => {
 };
 
 commentsLoader.addEventListener('click', onCommentsLoaderElementClick);
+
 export { initComments };
